@@ -53,6 +53,24 @@ namespace TaskTest
             Assert.True(shoppingBasket.Items[4].Name.Equals("Apple"));
         }
 
+        [Test]
+        public void Customer_Create_WorksCorrectly()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+
+            // ACT
+            Customer customer = Customer.Create("Michael Clausen", ShoppingBasket.Create(new List<Item>()), items);
+            customer.ShoppingBasket.AddItems(items);
+
+            // ASSERT
+            Assert.True(customer.ShoppingBasket.Items[0].Name.Equals("Pumpkin"));
+            Assert.True(customer.ShoppingBasket.Items[1].Name.Equals("Watermelon"));
+            Assert.True(customer.ShoppingBasket.Items[2].Name.Equals("Banana"));
+            Assert.True(customer.ShoppingBasket.Items[3].Name.Equals("Orange"));
+            Assert.True(customer.ShoppingBasket.Items[4].Name.Equals("Apple"));
+        }
+
         // ADDITEMS
         [Test]
         public void ShoppingBasket_AddItems_TooMuchWeight_Throws_TooMuchWeightException()
@@ -100,7 +118,7 @@ namespace TaskTest
         }
 
 
-        // ADDITEMS
+        // UPDATEITEMS
         [Test]
         public void ShoppingBasket_UpdateItems_TooMuchWeight_Throws_TooMuchWeightException()
         {
@@ -170,24 +188,7 @@ namespace TaskTest
             Assert.True(shoppingBasket.Items[3].Name.Equals("Cereal Box"));
             Assert.True(shoppingBasket.Items[4].Name.Equals("Milk"));
         }
-        // CREATE
-        [Test]
-        public void Customer_Create_WorksCorrectly()
-        {
-            // ARRANGE
-            List<Item> items = CreateItems();
-            
-            // ACT
-            Customer customer = Customer.Create("Michael Clausen", ShoppingBasket.Create(new List<Item>()), items);
-            customer.ShoppingBasket.AddItems(items);
-            
-            // ASSERT
-            Assert.True(customer.ShoppingBasket.Items[0].Name.Equals("Pumpkin"));
-            Assert.True(customer.ShoppingBasket.Items[1].Name.Equals("Watermelon"));
-            Assert.True(customer.ShoppingBasket.Items[2].Name.Equals("Banana"));
-            Assert.True(customer.ShoppingBasket.Items[3].Name.Equals("Orange"));
-            Assert.True(customer.ShoppingBasket.Items[4].Name.Equals("Apple"));
-        }
+  
 
 
         private List<Item> CreateItems()
