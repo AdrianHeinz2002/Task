@@ -38,7 +38,7 @@ namespace TaskTest
         }
 
         [Test]
-        public void shoppingBasket_Create_OrderedByWeightAscending_True()
+        public void shoppingBasket_Create_OrderedByWeightDescending_True()
         {
             // ARRANGE
             List<Item> items = CreateItems();
@@ -84,7 +84,7 @@ namespace TaskTest
         }
 
         [Test]
-        public void shoppingBasket_AddItems_OrderedByWeightAscending_True()
+        public void shoppingBasket_AddItems_OrderedByWeightDescending_True()
         {
             // ARRANGE
             List<Item> items = CreateItems();
@@ -151,7 +151,7 @@ namespace TaskTest
         }
 
         [Test]
-        public void shoppingBasket_UpdateItems_OrderedByWeightAscending_True()
+        public void shoppingBasket_UpdateItems_OrderedByWeightDescending_True()
         {
             // ARRANGE
             List<Item> items = CreateItems();
