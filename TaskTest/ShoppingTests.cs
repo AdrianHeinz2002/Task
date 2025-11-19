@@ -24,7 +24,7 @@ namespace TaskTest
             Assert.Throws<TooMuchWeightException>(() => ShoppingBasket.Create(items));
         }
         [Test]
-        public void ShoppingBasket_Create_correctWeight_Throws_NoException()
+        public void ShoppingBasket_Create_CorrectWeight_Throws_NoException()
         {
             // ARRANGE
             List<Item> items = CreateItems();
@@ -67,7 +67,7 @@ namespace TaskTest
         }
 
         [Test]
-        public void ShoppingBasket_AddItems_correctWeight_Throws_NoException()
+        public void ShoppingBasket_AddItems_CorrectWeight_Throws_NoException()
         {
             // ARRANGE
             List<Item> items = CreateItems();
@@ -124,7 +124,7 @@ namespace TaskTest
         }
 
         [Test]
-        public void ShoppingBasket_UpdateItems_correctWeight_Throws_NoException()
+        public void ShoppingBasket_UpdateItems_CorrectWeight_Throws_NoException()
         {
             // ARRANGE
             List<Item> items = CreateItems();
