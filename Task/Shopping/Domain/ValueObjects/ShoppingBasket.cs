@@ -24,22 +24,21 @@ namespace Task.Shopping.Domain.DTO
 
         public void AddItems(List<Item> items)
         {
-            List<Item> sortedItems = this._items;
-            sortedItems.AddRange(items);
-            sortedItems = sortedItems.OrderByDescending(item => item.Weight).ToList();
+            List<Item> newItems = this._items;
+            newItems.AddRange(items);
+            List<Item> sortedItems = newItems.OrderByDescending(item => item.Weight).ToList();
             ValidateShoppingCart(sortedItems);
             this._items = sortedItems;
         }
 
         public void UpdateItems(List<Item> items)
         {
-            this._items.Clear();
-            List<Item> sortedItems = items.OrderByDescending(item => item.Weight).ToList();
-            this._items.AddRange(sortedItems);
+            List<Item> sortedItems = items.OrderByDescending(item => item.Weight).ToList(); 
             ValidateShoppingCart(sortedItems);
+            this._items.Clear();
             this._items = sortedItems;
         }
-
+        
         private static void ValidateShoppingCart(List<Item> items)
         {
             double weight = 0;
