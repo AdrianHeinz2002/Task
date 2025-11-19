@@ -16,9 +16,9 @@ namespace TaskTest
         {
             // ARRANGE
             List<Item> items = CreateItems();
-            items.Add(Item.Create("Macbook", "superpc", 6));
 
             // ACT
+            items.Add(Item.Create("Macbook", "superpc", 6));
 
             // ASSERT
             Assert.Throws<TooMuchWeightException>(() => ShoppingBasket.Create(items));
@@ -28,10 +28,10 @@ namespace TaskTest
         {
             // ARRANGE
             List<Item> items = CreateItems();
-            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
-            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ACT
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ASSERT
             Assert.Pass();
@@ -42,10 +42,10 @@ namespace TaskTest
         {
             // ARRANGE
             List<Item> items = CreateItems();
-            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
-            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ACT
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ASSERT
             Assert.True(shoppingBasket.Items[0].Name.Equals("Pumpkin"));
@@ -74,10 +74,10 @@ namespace TaskTest
             // ARRANGE
             List<Item> items = CreateItems();
             ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
-            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 1) });
-            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ACT
+            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 1) });
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ASSERT
             Assert.Pass();
@@ -89,10 +89,10 @@ namespace TaskTest
             // ARRANGE
             List<Item> items = CreateItems();
             ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
-            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 5.5) });
-            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ACT
+            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 5.5) });
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
             // ASSERT
             Assert.True(shoppingBasket.Items[0].Name.Equals("Macbook"));
@@ -142,10 +142,9 @@ namespace TaskTest
 
             List<Item> itemsNew = new List<Item> { item1, item2, item3, item4, item5 };
 
+            // ACT
             shoppingBasket.UpdateItems(itemsNew);
             Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
-
-            // ACT
 
             // ASSERT
             Assert.Pass();
@@ -166,10 +165,9 @@ namespace TaskTest
 
             List<Item> itemsNew = new List<Item> { item1, item2, item3, item4, item5 };
 
+            // ACT
             shoppingBasket.UpdateItems(itemsNew);
             Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
-
-            // ACT
 
             // ASSERT
             Assert.True(shoppingBasket.Items[0].Name.Equals("Flour Sack"));
