@@ -10,59 +10,24 @@ namespace TaskTest
         {
         }
 
+        // CREATE
         [Test]
-        public void shoppingBasket_TooMuchWeight_Exception_True()
+        public void shoppingBasket_Create_TooMuchWeight_Throws_TooMuchWeightException()
         {
             // ARRANGE
-            Item item1 = Item.Create("Apple", "fruit", 1);
-            Item item2 = Item.Create("Banana", "fruit", 1);
-            Item item3 = Item.Create("Orange", "fruit", 1);
-            Item item4 = Item.Create("Watermelon", "fruit", 5);
-            Item item5 = Item.Create("Pumpkin", "vegetable", 7);
-            Item item6 = Item.Create("Macbook", "super computer", 6);
-            List<Item> items = new List<Item> { item1, item2, item3, item4, item5, item6 };
+            List<Item> items = CreateItems();
+            items.Add(Item.Create("Macbook", "superpc", 6));
 
             // ACT
 
             // ASSERT
             Assert.Throws<TooMuchWeightException>(() => ShoppingBasket.Create(items));
         }
-
         [Test]
-        public void shoppingBasket_OrderedByWeightAscending_True()
+        public void shoppingBasket_Create_correctWeight_Throws_NoException()
         {
             // ARRANGE
-            Item item1 = Item.Create("Macbook", "super computer", 6);
-            Item item2 = Item.Create("Banana", "fruit", 1);
-            Item item3 = Item.Create("Pumpkin", "vegetable", 7);
-            Item item4 = Item.Create("Watermelon", "fruit", 3);
-            Item item5 = Item.Create("Orange", "fruit", 2);
-            List<Item> items = new List<Item> { item1, item2, item3, item4, item5 };
-
-            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
-            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
-
-            // ACT
-
-            // ASSERT
-            Assert.True(shoppingBasket.Items[0].Name.Equals("Pumpkin"));
-            Assert.True(shoppingBasket.Items[1].Name.Equals("Macbook"));
-            Assert.True(shoppingBasket.Items[2].Name.Equals("Watermelon"));
-            Assert.True(shoppingBasket.Items[3].Name.Equals("Orange"));
-            Assert.True(shoppingBasket.Items[4].Name.Equals("Banana"));
-        }
-
-        [Test]
-        public void shoppingBasket_correctWeight_Exception_False()
-        {
-            // ARRANGE
-            Item item1 = Item.Create("Apple", "fruit", 1);       
-            Item item2 = Item.Create("Banana", "fruit", 1);      
-            Item item3 = Item.Create("Orange", "fruit", 1);      
-            Item item4 = Item.Create("Watermelon", "fruit", 5);  
-            Item item5 = Item.Create("Pumpkin", "vegetable", 7);
-            List<Item> items = new List<Item> { item1, item2, item3, item4, item5 };
-
+            List<Item> items = CreateItems();
             ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
             Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
 
@@ -71,5 +36,161 @@ namespace TaskTest
             // ASSERT
             Assert.Pass();
         }
+
+        [Test]
+        public void shoppingBasket_Create_OrderedByWeightAscending_True()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
+
+            // ACT
+
+            // ASSERT
+            Assert.True(shoppingBasket.Items[0].Name.Equals("Pumpkin"));
+            Assert.True(shoppingBasket.Items[1].Name.Equals("Watermelon"));
+            Assert.True(shoppingBasket.Items[2].Name.Equals("Banana"));
+            Assert.True(shoppingBasket.Items[3].Name.Equals("Orange"));
+            Assert.True(shoppingBasket.Items[4].Name.Equals("Apple"));
+        }
+
+        // ADDITEMS
+        [Test]
+        public void shoppingBasket_AddItems_TooMuchWeight_Throws_TooMuchWeightException()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            // ACT
+
+            // ASSERT
+            Assert.Throws<TooMuchWeightException>(() => shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 6) }));
+        }
+
+        [Test]
+        public void shoppingBasket_AddItems_correctWeight_Throws_NoException()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 1) });
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
+
+            // ACT
+
+            // ASSERT
+            Assert.Pass();
+        }
+
+        [Test]
+        public void shoppingBasket_AddItems_OrderedByWeightAscending_True()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+            shoppingBasket.AddItems(new List<Item> { Item.Create("Macbook", "superpc", 5.5) });
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
+
+            // ACT
+
+            // ASSERT
+            Assert.True(shoppingBasket.Items[0].Name.Equals("Macbook"));
+            Assert.True(shoppingBasket.Items[1].Name.Equals("Pumpkin"));
+            Assert.True(shoppingBasket.Items[2].Name.Equals("Watermelon"));
+            Assert.True(shoppingBasket.Items[3].Name.Equals("Banana"));
+            Assert.True(shoppingBasket.Items[4].Name.Equals("Orange"));
+            Assert.True(shoppingBasket.Items[5].Name.Equals("Apple"));
+        }
+
+
+        // ADDITEMS
+        [Test]
+        public void shoppingBasket_UpdateItems_TooMuchWeight_Throws_TooMuchWeightException()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+
+            Item item1 = Item.Create("Milk", "Breakfast", 0.5);         
+            Item item2 = Item.Create("Rice Bag", "Breakfast", 3);      
+            Item item3 = Item.Create("Cereal Box", "Breakfast", 2);
+            Item item4 = Item.Create("Juice Carton", "Breakfast", 4);
+            Item item5 = Item.Create("Flour Sack", "Breakfast", 5);
+            Item item6 = Item.Create("Sack", "Breakfast", 6);
+
+            List<Item> itemsNew = new List<Item> { item1, item2, item3, item4, item5, item6 };
+
+            // ACT
+
+            // ASSERT
+            Assert.Throws<TooMuchWeightException>(() => shoppingBasket.UpdateItems(itemsNew));
+        }
+
+        [Test]
+        public void shoppingBasket_UpdateItems_correctWeight_Throws_NoException()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+
+            Item item1 = Item.Create("Milk", "Breakfast", 0.5);
+            Item item2 = Item.Create("Rice Bag", "Breakfast", 3);
+            Item item3 = Item.Create("Cereal Box", "Breakfast", 2);
+            Item item4 = Item.Create("Juice Carton", "Breakfast", 4);
+            Item item5 = Item.Create("Flour Sack", "Breakfast", 5);
+
+            List<Item> itemsNew = new List<Item> { item1, item2, item3, item4, item5 };
+
+            shoppingBasket.UpdateItems(itemsNew);
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
+
+            // ACT
+
+            // ASSERT
+            Assert.Pass();
+        }
+
+        [Test]
+        public void shoppingBasket_UpdateItems_OrderedByWeightAscending_True()
+        {
+            // ARRANGE
+            List<Item> items = CreateItems();
+            ShoppingBasket shoppingBasket = ShoppingBasket.Create(items);
+
+            Item item1 = Item.Create("Milk", "Breakfast", 0.5);
+            Item item2 = Item.Create("Rice Bag", "Breakfast", 3);
+            Item item3 = Item.Create("Cereal Box", "Breakfast", 2);
+            Item item4 = Item.Create("Juice Carton", "Breakfast", 4);
+            Item item5 = Item.Create("Flour Sack", "Breakfast", 5);
+
+            List<Item> itemsNew = new List<Item> { item1, item2, item3, item4, item5 };
+
+            shoppingBasket.UpdateItems(itemsNew);
+            Customer customer = Customer.Create("Michael Clausen", shoppingBasket);
+
+            // ACT
+
+            // ASSERT
+            Assert.True(shoppingBasket.Items[0].Name.Equals("Flour Sack"));
+            Assert.True(shoppingBasket.Items[1].Name.Equals("Juice Carton"));
+            Assert.True(shoppingBasket.Items[2].Name.Equals("Rice Bag"));
+            Assert.True(shoppingBasket.Items[3].Name.Equals("Cereal Box"));
+            Assert.True(shoppingBasket.Items[4].Name.Equals("Milk"));
+        }
+
+        private List<Item> CreateItems()
+        {
+            Item item1 = Item.Create("Apple", "fruit", 0.5);
+            Item item2 = Item.Create("Banana", "fruit", 3);
+            Item item3 = Item.Create("Orange", "fruit", 2);
+            Item item4 = Item.Create("Watermelon", "fruit", 4);
+            Item item5 = Item.Create("Pumpkin", "vegetable", 5);
+
+            List<Item> items = new List<Item> { item1, item2, item3, item4, item5 };
+            return items;
+        }
+
+
     }
 }
